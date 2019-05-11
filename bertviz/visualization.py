@@ -34,22 +34,30 @@ class AttentionVisualizer:
 
     def _insert_token(self, tokens):
         result = []
+        types = []
         for i in len(tokens):
             result.append(tokens[i])
-            result.append(['[s]'])
+            result.append('[s]')
+            types.append(0)
+            types.append(1)
 
-        return result
+        return result, types
 
     def _get_inputs(self, sentence_a, sentence_b):
-        tokens_a = self.tokenizer.tokenize(sentence_a)
+        tokens_b_delim = []
+        types_b = []
+
+        tokens_a, types_a = self.tokenizer.tokenize(sentence_a)
         tokens_a = self._insert_token(tokens_a)
-        tokens_b = self.tokenizer.tokenize(sentence_b)
-        tokens_b = self._insert_token(tokens_b)
         tokens_a_delim = ['[CLS]'] + tokens_a + ['[SEP]']
-        tokens_b_delim = tokens_b + ['[SEP]']
+        if sentence_a is not None:
+            tokens_b = self.tokenizer.tokenize(sentence_b)
+            tokens_b, types_b = self._insert_token(tokens_b)
+            tokens_b_delim = tokens_b + ['[SEP]']
         token_ids = self.tokenizer.convert_tokens_to_ids(tokens_a_delim + tokens_b_delim)
         tokens_tensor = torch.tensor([token_ids])
-        token_type_tensor = torch.LongTensor([[0] * len(tokens_a_delim) + [1] * len(tokens_b_delim)])
+        token_type_tensor = types_a + types_b
+        # token_type_tensor = torch.LongTensor([[0] * len(tokens_a_delim) + [1] * len(tokens_b_delim)])
         return tokens_tensor, token_type_tensor, tokens_a_delim, tokens_b_delim
 
     def _get_attention(self, tokens_tensor, token_type_tensor):
