@@ -40,6 +40,7 @@ class AttentionVisualizer:
             result.append('[s]')
             types.append(0)
             types.append(1)
+        types.append(0)
 
         return result, types
 
@@ -49,7 +50,7 @@ class AttentionVisualizer:
 
         tokens_a = self.tokenizer.tokenize(sentence_a)
         tokens_a, types_a = self._insert_token(tokens_a)
-        tokens_a_delim = ['[CLS]'] + tokens_a + ['[SEP]']
+        tokens_a_delim = [tokens_a + ['[SEP]']]
         if sentence_b is not None:
             tokens_b = self.tokenizer.tokenize(sentence_b)
             tokens_b, types_b = self._insert_token(tokens_b)
