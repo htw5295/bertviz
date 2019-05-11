@@ -47,8 +47,8 @@ class AttentionVisualizer:
         tokens_b_delim = []
         types_b = []
 
-        tokens_a, types_a = self.tokenizer.tokenize(sentence_a)
-        tokens_a = self._insert_token(tokens_a)
+        tokens_a = self.tokenizer.tokenize(sentence_a)
+        tokens_a, types_a = self._insert_token(tokens_a)
         tokens_a_delim = ['[CLS]'] + tokens_a + ['[SEP]']
         if sentence_a is not None:
             tokens_b = self.tokenizer.tokenize(sentence_b)
