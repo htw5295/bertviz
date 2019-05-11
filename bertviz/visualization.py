@@ -35,8 +35,8 @@ class AttentionVisualizer:
     def _insert_token(self, tokens):
         result = []
         types = []
-        for i in len(tokens):
-            result.append(tokens[i])
+        for token in tokens:
+            result.append(token)
             result.append('[s]')
             types.append(0)
             types.append(1)
