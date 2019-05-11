@@ -32,9 +32,19 @@ class AttentionVisualizer:
         attn = self._get_attention(tokens_tensor, token_type_tensor)
         return tokens_a, tokens_b, attn
 
+    def _insert_token(self, tokens):
+        result = []
+        for i in len(tokens):
+            result.append(tokens[i])
+            result.append(['[s]'])
+
+        return result
+
     def _get_inputs(self, sentence_a, sentence_b):
         tokens_a = self.tokenizer.tokenize(sentence_a)
+        tokens_a = self._insert_token(tokens_a)
         tokens_b = self.tokenizer.tokenize(sentence_b)
+        tokens_b = self._insert_token(tokens_b)
         tokens_a_delim = ['[CLS]'] + tokens_a + ['[SEP]']
         tokens_b_delim = tokens_b + ['[SEP]']
         token_ids = self.tokenizer.convert_tokens_to_ids(tokens_a_delim + tokens_b_delim)
