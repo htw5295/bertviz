@@ -40,7 +40,7 @@ class AttentionVisualizer:
             result.append('[s]')
             types.append(0)
             types.append(1)
-        types.append(0)
+        types.append(2)
 
         return result, types
 
