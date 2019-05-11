@@ -27,7 +27,7 @@ class AttentionVisualizer:
         self.tokenizer = tokenizer
         self.model.eval()
 
-    def get_viz_data(self, sentence_a, sentence_b):
+    def get_viz_data(self, sentence_a, sentence_b=None):
         tokens_tensor, token_type_tensor, tokens_a, tokens_b = self._get_inputs(sentence_a, sentence_b)
         attn = self._get_attention(tokens_tensor, token_type_tensor)
         return tokens_a, tokens_b, attn
